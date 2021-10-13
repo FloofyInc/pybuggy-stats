@@ -67,6 +67,8 @@ Data.getProblems((err, data) => {
                     // user, problem, problempt attemp #, user attempt #, elapsed/attempt, attempt start time, user type, submitted
 
                     var startTime = new Date(new Date('2019-12-02T15:31:03.036Z').getTime() - (20*1000));
+
+                    var timePrev = 0;
                     item.attempts.forEach((attempt, j) => {
                         // finalData.push({
                         //     user: item.email,
@@ -84,14 +86,16 @@ Data.getProblems((err, data) => {
                                     [d.getHours(),
                                     d.getMinutes(),
                                     d.getSeconds()].join(':');
-
+                        
                         var line = item.email + ',' +
                             'Q' + problems[item.id].index + ':'+ problems[item.id].name + ',' +
                             j + ',' + 
                             attempt.elapsedTime + ',' +
                             dformat + ',' +
                             validUsers[item.email].type + ',' +
-                            item.complete + "\n";
+                            item.complete + "," + 
+                            attempt.code + "," + 
+                            attempt.output + "\n";
 
                         fs.appendFileSync(fileName, line);
                     });
